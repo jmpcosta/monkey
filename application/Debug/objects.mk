@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS :=
+LIBS := -lmonkey -larta -lxerces-c-3.2
 

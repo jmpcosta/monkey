@@ -18,6 +18,9 @@
 
 // Import C++ system headers
 
+// Import Library headers
+#include <mklib.hh>
+
 // *****************************************************************************************
 //
 // Section: Type declaration/definition
@@ -26,9 +29,10 @@
 
 #if defined(OS_LINUX) || defined(__linux__) || defined(LINUX)
 
- #define OS_LINUX		1
- #define MONKEY_MAIN	main
- #define t_char			char
+ #define OS_LINUX			1
+ #define MONKEY_MAIN		main
+ #define t_char				char
+
 
 #elif defined(OS_WINDOWS) || defined(_WIN32) || defined(_WIN64)
 
@@ -37,5 +41,9 @@
  #define t_char			wchar_t
 
 #endif
+
+
+using PROJECT = monkey::project;
+
 
 #endif // MONKEY_DEFS_HH_

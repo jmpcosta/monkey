@@ -3,10 +3,12 @@
 // File description:
 //
 // Author:	Joao Costa
-// Purpose:	Monkey main C++ function
-//			Read the README.md file for more information on the project
+// Purpose:	Implementation of a Target type
 //
 // *****************************************************************************************
+
+#ifndef MONKEY_TARGET_HH_
+#define MONKEY_TARGET_HH_
 
 
 // *****************************************************************************************
@@ -15,22 +17,41 @@
 //
 // *****************************************************************************************
 
-// Include OSAPI C++ headers
+// Import C++ standard headers
+#include <vector>
 
-// Include Standard headers
-#include <cstdlib>
+// Import library definitions
+#include "defs/trace.hh"
+#include "goal/goal.hh"
 
-// Import module declarations
-#include "monkey_defs.hh"
+
 
 // *****************************************************************************************
 //
-// Section: Function definition
+// Section: API declaration
 //
 // *****************************************************************************************
 
-int MONKEY_MAIN( int argc, t_char * argv[] )
+
+namespace monkey
 {
 
- return EXIT_SUCCESS;
-}
+class target
+{
+public:
+		target();
+		~target();
+
+
+private:
+
+		std::vector<goal>		iGoals;
+
+
+		TRACE_CLASSNAME_DECLARATION
+};
+
+
+}	// End of namespace "monkey"
+
+#endif // MONKEY_TARGET_HH_

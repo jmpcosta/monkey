@@ -8,7 +8,9 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include code/subdir.mk
+-include code/target/subdir.mk
+-include code/project/subdir.mk
+-include code/goal/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -38,19 +40,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: monkey
+all: libmonkey.so
 
 # Tool invocations
-monkey: $(OBJS) $(USER_OBJS)
+libmonkey.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "monkey" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/home/joao/Software/xerces/src" -L"/home/joao/workspace/arta/Debug" -shared -o "libmonkey.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) monkey
+	-$(RM) $(LIBRARIES)$(CC_DEPS)$(C++_DEPS)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) libmonkey.so
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 
-	 Purpose: Example file for a target specification
+	 Purpose: Example file for a project specification
 	 Author:  J. Costa
 	 Notes:
 	 		- Each XML node under the root element can have an attribute named info that contributes to the target help, e.g.:
-	 		monkey <target> help
+	 		monkey <project name> help
 	 		- A target can be executed with the defined (in a target XML file) command line parameters or these parameters can be passed directly in the command line:
 	 		monkey <target> -G <goal name> <command line parameters> 
  -->
- 
+
+<project> 
+
 <!-- The following two lines provide an example on how to import property files or property xml based files -->
 <import property-file="example.properties"/>
 <import xml-file="example.xml"/>
 
+<!--  Each project can have a project wide environment -->
+<environment>
+		<var name="PATH" value="/bin:" />
+		<var name="TOOL_DIR" value="/opt/tool" />
+</environment>
+
+<!--  Each project file can contain a set of targets but only one target executes.
+	  The executing target is either specified on the command line or the default target is executed instead. 
+-->
+
+<targets default="target1">
+
+
 <!-- The target to execute has:
-	 - An environment
+	 - An environment (project + target + goal )
 	 - A set of goals that must be successfully executed in order for the target to be also successful
 	 	- Each goal has an environment and an executable application with a set of parameters
 	 		- The executable application can execute as a given user and group
  -->
  
-<target info="Example of a target configuration">
+<target name="target1" info="Example of a target configuration">
 	<environment>
-		<var name="PATH" value="/bin:/usr/bin" />
-		<var name="TOOL" value="/opt/tool" />
+		<var name="PATH" value="${PATH}:/usr/bin" />
 	</environment>
 	<goals>
-		<goal name="Step2" info="Execute step one">
+		<goal name="Step1" info="Execute step one">
 			<environment>
 				<var name="TOOL_BIN" value="${TOOL}/bin" />
 				<var name="PATH" value="${PATH}:${TOOL_BIN}" />
@@ -53,3 +67,41 @@
 	
 	</goals>
 </target>
+
+
+<target name="target2" info="Second example of a target configuration">
+	<environment>
+		<var name="PATH" value="${PATH}:/usr/local/bin" />
+		<var name="TOOL" value="/opt/tool2" />
+	</environment>
+	<goals>
+		<goal name="Step1" info="Execute step one">
+			<environment>
+				<var name="TOOL_BIN" value="${TOOL}/bin" />
+				<var name="PATH" value="${PATH}:${TOOL_BIN}" />
+			</environment>
+			<run path="${TOOL_BIN}/step1" user="root" group="root" info="Example tool, step 1">
+				<params>
+					<param info="Help">-h</param>
+					<param info="Verbose">-v</param>
+				</params>
+			</run>
+		</goal>
+		<goal name="Step2" info="Execute step two">
+			<environment>
+				<var name="TOOL_BIN" value="${TOOL2}/bin" />
+				<var name="PATH" value="${PATH}:${TOOL_BIN}" />
+			</environment>
+			<run path="${TOOL_BIN}/step2" user="root" group="root" info="Example tool, step 2">
+				<params>
+					<param info="zip file using the target name">-z ${target}.zip</param>
+				</params>
+			</run>
+		</goal>
+	
+	</goals>
+</target>
+
+</targets>
+
+</project>
